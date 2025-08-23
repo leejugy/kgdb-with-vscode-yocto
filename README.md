@@ -4,14 +4,13 @@ UART(KGDBOC)로 Yocto 커널을 GDB/VSCode에서 디버깅
 
 ---
 # 개요
----
+
 - 연결 방식: UART(KGDBOC)
 - 멈추는 방법: SYSRQ-g (Ctrl-C 대신)
 - 부팅 시 nokaslr 또는 커널 menuconfig에서 CONFIG_RANDOMIZE_BASE=n 지정해주면 좋음
 
 ---
 # 커널 설정 (menuconfig)
----
 
 ```Kconfig
 CONFIG_GDB_SCRIPTS = y
@@ -30,7 +29,6 @@ CONFIG_RANDOMIZE_BASE = n   # 부팅 파라미터에 nokaslr 사용
 
 ---
 # (WSL2) USB-Serial COM 포트 넘겨주기 (powershell - 관리자 권한)
----
 
 ## 장치 확인
 ```powershell
@@ -58,7 +56,7 @@ usbipd detach --busid <your-busid>
 
 ---
 # KGDB 진입 (타깃 보드)
----
+
 ## 1. 런타임(이미 부팅 후)
 ```bash
 # kgdb 시리얼 포트 설정
@@ -89,7 +87,6 @@ boot
 
 ---
 # 호스트 GDB 세션 (순정 GDB)
----
 
 **bash**
 
@@ -121,7 +118,6 @@ target remote <path to your debug serial>
 
 ---
 # vscode 설정
----
 
 **launch.json**
 
