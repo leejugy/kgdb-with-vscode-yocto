@@ -62,10 +62,12 @@ usbipd detach --busid <your-busid>
 
 ## 1. 런타임(이미 부팅 후)
 ```bash
-# kgdb 시리얼 포트 설정
+# kgdb 시리얼 포트 설정 및 활성화
 echo <board-uart>,115200 > /sys/module/kgdboc/parameters/kgdboc
 
-# kgdb 시작
+# kgdb 커널을 멈추는 명령
+# gdb로 vmlinux를 실행하면 stop 대신 아래 bash 스크립트를 사용한다.
+# gdb에서는 커널 실행을 멈출 수 없다
 echo g > /proc/sysrq-trigger
 ```
 
@@ -91,7 +93,7 @@ boot
 - nokaslr : 커널 부트 이미지 랜덤화 x
 
 ---
-# 호스트 GDB 세션 (순정 GDB)
+# GDB (순정 GDB)
 
 **bash**
 
