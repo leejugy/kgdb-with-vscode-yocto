@@ -75,6 +75,10 @@ echo g > /proc/sysrq-trigger
 
 - board-uart 예: ttyLP0, ttymxc0 등 보드 콘솔 이름
 
+- **주의)** break 포인트 삽입은 gdb가 멈춘 상태에서만 가능함
+  
+- 따라서 "echo g > /proc/sysrq-trigger" 이후 break point 삽입, 그 다음 continue
+
 ## 2. 부팅 할 때
 
 **uboot**
