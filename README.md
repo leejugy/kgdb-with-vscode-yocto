@@ -100,7 +100,7 @@ boot
 - nokaslr : 커널 부트 이미지 랜덤화 x
 
 ---
-# GDB (순정 GDB)
+# GDB (WSL2 GDB 사용)
 
 **bash**
 
