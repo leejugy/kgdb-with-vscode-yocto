@@ -34,13 +34,18 @@ CONFIG_RANDOMIZE_BASE = n   # 부팅 파라미터에 nokaslr 사용
 
 ## 장치 확인
 ```powershell
+# usb 리스트 확인
+
 usbipd list
 ```
 리스트로 busid 확인하기
 
 ## usb wsl에 붙이기
 ```powershell
+# usb bind
 usbipd bind --busid <your-busid>
+
+# usb wsl 연결
 usbipd attach --wsl --busid <your-busid>
 ```
 
@@ -56,8 +61,10 @@ usbipd detach --busid <your-busid>
 ---
 ## 1. 런타임(이미 부팅 후)
 ```bash
+# kgdb 시리얼 포트 설정
 echo <board-uart>,115200 > /sys/module/kgdboc/parameters/kgdboc
-echo 1 > /proc/sys/kernel/sysrq
+
+# kgdb 시작작
 echo g > /proc/sysrq-trigger
 ```
 
@@ -66,8 +73,13 @@ echo g > /proc/sysrq-trigger
 - board-uart 예: ttyLP0, ttymxc0 등 보드 콘솔 이름
 
 ## 2. 부팅 할 때
+
+**uboot**
+
+```uboot
 setenv bootargs 'console=<board-uart>,115200 root=<rootdev> rw rootwait kgdboc=<board-uart>,115200 kgdbwait nokaslr'
 saveenv
+```
 boot
 
 - board-uart : uart 시리얼 포트
@@ -80,8 +92,12 @@ boot
 ---
 
 **bash**
+
 ```bash
+# 환경 변수 셋업
 source /path/to/sdk/environment-setup-armv8a-poky-linux
+
+#gdb 실행행
 $GDB <path to your dir>/vmlinux -tui
 ```
 
