@@ -78,8 +78,10 @@ echo g > /proc/sysrq-trigger
 **uboot**
 
 ```uboot
+# 주의 : bootcmd에 의해서 bootargs가 덮어 씌워질 수 있으니 bootcmd도 설정하는거 권장함
+
 setenv bootargs 'console=<board-uart>,115200 root=<rootdev> rw rootwait kgdboc=<board-uart>,115200 kgdbwait nokaslr'
-saveenv
+setenv bootcmd "fatload mmc 0:1 <addr1> <Kernel Image>;fatload mmc 0:1 <addr2> <your dtb>;booti <addr1> - <addr2>"
 ```
 boot
 
