@@ -166,3 +166,8 @@ target remote <path to your debug serial>
     - set substitute-path /usr/src/kernel <path to kernel source>
     - target remote <tty시리얼>
 5. logging 디버그 로그 (선택)
+
+---
+# 결과
+
+<img width="1280" height="1391" alt="image" src="https://github.com/user-attachments/assets/d5ec655a-ade9-4118-802a-526ebaa9620f" />
