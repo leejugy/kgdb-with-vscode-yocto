@@ -52,7 +52,10 @@ usbipd attach --wsl --busid <your-busid>
 - 리눅스 쪽에서 시리얼 드라이버가 필요할 수 있음
 
 ## usb 빼기
+
+```powershell
 usbipd detach --busid <your-busid>
+```
 
 ---
 # KGDB 진입 (타깃 보드)
