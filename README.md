@@ -79,13 +79,15 @@ boot
 4) 호스트 GDB 세션 (순정 GDB)
 ---
 
-**gdb**
-```gdb
+**bash**
+```bash
 source /path/to/sdk/environment-setup-armv8a-poky-linux
 $GDB <path to your dir>/vmlinux -tui
 ```
 
 yocto에서 빌드된 sdk의 gdb 사용하기
+
+**gdb**
 
 ```gdb
 # vmlinux 경로 지정, 위에서 $GDB <path to your dir>/vmlinux 열었으면 안해도 됨
