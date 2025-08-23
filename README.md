@@ -79,6 +79,9 @@ echo g > /proc/sysrq-trigger
   
 - 따라서 "echo g > /proc/sysrq-trigger" 이후 break point 삽입, 그 다음 continue
 
+- 그래서, 콘솔 포트, kgdboc 포트 분리 하는것 추천
+
+
 ## 2. 부팅 할 때
 
 **uboot**
