@@ -3,14 +3,14 @@
 UART(KGDBOC)로 Yocto 커널을 GDB/VSCode에서 디버깅
 
 ---
-0) 개요
+# 개요
 ---
 - 연결 방식: UART(KGDBOC)
 - 멈추는 방법: SYSRQ-g (Ctrl-C 대신)
 - 부팅 시 nokaslr 또는 커널 menuconfig에서 CONFIG_RANDOMIZE_BASE=n 지정해주면 좋음
 
 ---
-1) 커널 설정 (menuconfig)
+# 커널 설정 (menuconfig)
 ---
 
 ```Kconfig
@@ -29,16 +29,16 @@ CONFIG_RANDOMIZE_BASE = n   # 부팅 파라미터에 nokaslr 사용
 - CONFIG_RANDOMIZE_BASE or bootargs에 nokaslr를 넘겨주면 커널 이미지 주소 랜덤화 안됨
 
 ---
-2) (WSL2) USB-Serial COM 포트 넘겨주기 (powershell - 관리자 권한)
+# (WSL2) USB-Serial COM 포트 넘겨주기 (powershell - 관리자 권한)
 ---
 
-# 장치 확인
+## 장치 확인
 ```powershell
 usbipd list
 ```
 리스트로 busid 확인하기
 
-# usb wsl에 붙이기
+## usb wsl에 붙이기
 ```powershell
 usbipd bind --busid <your-busid>
 usbipd attach --wsl --busid <your-busid>
@@ -48,13 +48,13 @@ usbipd attach --wsl --busid <your-busid>
 
 - 리눅스 쪽에서 시리얼 드라이버가 필요할 수 있음
 
-# usb 빼기
+## usb 빼기
 usbipd detach --busid <your-busid>
 
 ---
-3) KGDB 진입 (타깃 보드)
+# KGDB 진입 (타깃 보드)
 ---
-# 1. 런타임(이미 부팅 후)
+## 1. 런타임(이미 부팅 후)
 ```bash
 echo <board-uart>,115200 > /sys/module/kgdboc/parameters/kgdboc
 echo 1 > /proc/sys/kernel/sysrq
@@ -65,7 +65,7 @@ echo g > /proc/sysrq-trigger
 
 - board-uart 예: ttyLP0, ttymxc0 등 보드 콘솔 이름
 
-# 2. 부팅 할 때
+## 2. 부팅 할 때
 setenv bootargs 'console=<board-uart>,115200 root=<rootdev> rw rootwait kgdboc=<board-uart>,115200 kgdbwait nokaslr'
 saveenv
 boot
@@ -76,7 +76,7 @@ boot
 - nokaslr : 커널 부트 이미지 랜덤화 x
 
 ---
-4) 호스트 GDB 세션 (순정 GDB)
+# 호스트 GDB 세션 (순정 GDB)
 ---
 
 **bash**
@@ -85,7 +85,7 @@ source /path/to/sdk/environment-setup-armv8a-poky-linux
 $GDB <path to your dir>/vmlinux -tui
 ```
 
-yocto에서 빌드된 sdk의 gdb 사용하기
+## yocto에서 빌드된 sdk의 gdb 사용하기
 
 **gdb**
 
@@ -104,7 +104,7 @@ target remote <path to your debug serial>
 ```
 
 ---
-5) vscode 설정
+# vscode 설정
 ---
 
 **launch.json**
