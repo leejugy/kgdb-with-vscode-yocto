@@ -65,7 +65,7 @@ usbipd detach --busid <your-busid>
 # kgdb 시리얼 포트 설정
 echo <board-uart>,115200 > /sys/module/kgdboc/parameters/kgdboc
 
-# kgdb 시작작
+# kgdb 시작
 echo g > /proc/sysrq-trigger
 ```
 
