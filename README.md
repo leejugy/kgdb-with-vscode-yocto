@@ -74,3 +74,70 @@ boot
 
 # 타깃 접속 (시리얼 장치 파일)
 (gdb) target remote <path to your debug serial>
+
+# 팁:
+# - 붙기 전에 SYSRQ-g로 커널을 "정지"해 두면 브레이크가 바로 먹음
+# - KASLR가 켜져 있으면 _stext 실제 주소로 add-symbol-file 하거나 nokaslr 사용
+# - 시리얼 KGDB 안정화: set target-async off / set remotetimeout 30
+
+----------------------------------------------------------------
+5) Yocto SDK의 GDB 사용 (선택)
+----------------------------------------------------------------
+source /path/to/sdk/environment-setup-armv8a-poky-linux
+$GDB <path to your dir>/vmlinux
+
+----------------------------------------------------------------
+6) 검증
+----------------------------------------------------------------
+# 타깃에서
+cat /proc/cmdline          # kgdboc, kgdbwait, nokaslr 확인
+dmesg | grep -i kgdb       # "Waiting for connection..." 등 로그 확인
+
+----------------------------------------------------------------
+7) 흔한 문제 체크
+----------------------------------------------------------------
+- bootargs에 세미콜론(;) → 파라미터 파싱 실패
+- kgdboc의 장치명은 "보드 UART", 호스트 /dev/tty* 아님
+- /dev/tty* 권한/점유: dialout 그룹, fuser -v /dev/tty*
+- VSCode 사용 시: launchCompleteCommand=None, set target-async off, set remotetimeout 30
+
+================================================================
+[예시] 실제 경로/장치로 채운 버전
+================================================================
+
+# 커널/부트 설정
+CONFIG_KGDB = y
+CONFIG_KGDB_SERIAL_CONSOLE = y
+CONFIG_MAGIC_SYSRQ = y
+CONFIG_DEBUG_INFO = y
+CONFIG_FRAME_POINTER = y
+CONFIG_DEBUG_INFO_REDUCED = n
+CONFIG_RANDOMIZE_BASE = n   # 또는 부팅 시 nokaslr
+
+# U-Boot 부트 인자(부팅 중 대기)
+setenv bootargs 'console=ttyLP0,115200 root=/dev/mmcblk0p2 rw rootwait kgdboc=ttyLP0,115200 kgdbwait nokaslr'
+saveenv
+boot
+
+# (WSL2) USB 패스스루
+usbipd list
+usbipd bind --busid 3-1
+usbipd attach --wsl --busid 3-1
+# 분리
+usbipd detach --busid 3-1
+
+# 런타임 진입(대안)
+echo ttyLP0,115200 > /sys/module/kgdboc/parameters/kgdboc
+echo 1 > /proc/sys/kernel/sysrq
+echo g > /proc/sysrq-trigger
+
+# 호스트 GDB
+(gdb) file /home/leejunggyun/yocto/frdm/frdm-imx93/tmp/work/imx93frdm-poky-linux/linux-imx/6.6.36+git/build/vmlinux
+(gdb) set substitute-path /usr/src/kernel /home/leejunggyun/yocto/frdm/frdm-imx93/tmp/work/imx93frdm-poky-linux/linux-imx/6.6.36+git/git
+(gdb) set serial baud 115200
+(gdb) show serial baud
+(gdb) target remote /dev/ttyACM0
+
+# Yocto SDK GDB
+source /opt/frdm-imx93/environment-setup-armv8a-poky-linux
+$GDB /home/leejunggyun/yocto/frdm/frdm-imx93/tmp/work/imx93frdm-poky-linux/linux-imx/6.6.36+git/build/vmlinux
