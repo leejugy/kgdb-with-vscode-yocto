@@ -9,6 +9,7 @@ UART(KGDBOC)로 Yocto 커널을 GDB/VSCode에서 디버깅
 - 멈추는 방법: SYSRQ-g (Ctrl-C 대신)
 - 부팅 시 nokaslr 또는 커널 menuconfig에서 CONFIG_RANDOMIZE_BASE=n 지정해주면 좋음
 - 권장 사항 : 디버깅용 시리얼 포트와 콘솔용 시리얼 포트를 분리하는게 좋음
+- 콘솔용 혹은 디버깅용 uart dt에서 활성화 필요
 ---
 # 커널 설정 (menuconfig)
 
