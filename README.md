@@ -197,8 +197,8 @@ target remote <path to your debug serial>
 
 - break point 새로 삽입하려면
 
-1. break point를 vscode에서 미리 추가하기
-2. echo g > /proc/sysrq-trigger (콘솔용 시리얼, 디버깅용 시리얼을 분리해둔 경우 콘솔용 시리얼에서 입력)
+1. echo g > /proc/sysrq-trigger (콘솔용 시리얼, 디버깅용 시리얼을 분리해둔 경우 콘솔용 시리얼에서 입력)
+2. arch_kgdb_breakpoint 에 멈추는데 이 상태에서 break point를 삽입하거나, 혹은 2번을 실행하기 이전에 삽입해두면 됨
 
 ## 삽입 성공한 모습
 <img width="2559" height="1388" alt="image" src="https://github.com/user-attachments/assets/1fe9f906-c302-430d-8598-fc3e4fc62c8d" />
