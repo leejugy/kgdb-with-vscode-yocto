@@ -8,7 +8,7 @@ UART(KGDBOC)로 Yocto 커널을 GDB/VSCode에서 디버깅
 - 연결 방식: UART(KGDBOC)
 - 멈추는 방법: SYSRQ-g (Ctrl-C 대신)
 - 부팅 시 nokaslr 또는 커널 menuconfig에서 CONFIG_RANDOMIZE_BASE=n 지정해주면 좋음
-
+- 권장 사항 : 디버깅용 시리얼 포트와 콘솔용 시리얼 포트를 분리하는게 좋음
 ---
 # 커널 설정 (menuconfig)
 
@@ -105,8 +105,14 @@ boot
 **bash**
 
 ```bash
+bitbake <your image> -c do_populate_sdk
+```
+
+- sdk 빌드하고 설치함. 여기서 환경 변수 가져와서 $GDB 사용할 것임
+
+```bash
 # 환경 변수 셋업
-source /path/to/sdk/environment-setup-armv8a-poky-linux
+source /path/to/sdk/environment
 
 #gdb 실행행
 $GDB <path to your dir>/vmlinux -tui
@@ -114,13 +120,15 @@ $GDB <path to your dir>/vmlinux -tui
 
 ## yocto에서 빌드된 sdk의 gdb 사용하기
 
+
 **gdb**
 
 ```gdb
 # vmlinux 경로 지정, 위에서 $GDB <path to your dir>/vmlinux 열었으면 안해도 됨
+# vmlinux 파일은 yocto build 디렉토리의 build/tmp/work/.../vmlinux 
 file <path to your dir>/vmlinux
 
-# Yocto/디버그 경로 매핑
+# Yocto/디버그 경로 매핑, 커널 소스는 build/tmp/work-shared/.../kernel-source에 있음
 set substitute-path /usr/src/kernel <path to your kernel source>
 
 # 시리얼 속도
