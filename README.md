@@ -180,3 +180,17 @@ target remote <path to your debug serial>
 # 결과
 
 <img width="1280" height="1391" alt="image" src="https://github.com/user-attachments/assets/d5ec655a-ade9-4118-802a-526ebaa9620f" />
+
+## break point 삽입
+
+<img width="1275" height="1386" alt="image" src="https://github.com/user-attachments/assets/2c2e4557-cb17-4016-a9e5-699a1163fb2f" />
+
+- 동작 중에 break point 삽입하면 비활성화 됨 (gdb가 안멈췄기 때문)
+
+- break point 새로 삽입하려면
+
+1. break point를 vscode에서 미리 추가하기
+2. echo g > /proc/sysrq-trigger (콘솔용 시리얼, 디버깅용 시리얼을 분리해둔 경우 콘솔용 시리얼에서 입력)
+
+## 삽입 성공한 모습습
+<img width="2559" height="1388" alt="image" src="https://github.com/user-attachments/assets/1fe9f906-c302-430d-8598-fc3e4fc62c8d" />
