@@ -114,7 +114,7 @@ bitbake <your image> -c do_populate_sdk
 # 환경 변수 셋업
 source /path/to/sdk/environment
 
-#gdb 실행행
+#gdb 실행
 $GDB <path to your dir>/vmlinux -tui
 ```
 
